@@ -36,8 +36,9 @@ books = [
 
 def build_catalog(books):
     catalog = {}
-    entry = {}
+    
     for title, author, year, copies in books:
+        entry = {}
         entry["author"] = author
         entry["year"] = year
         entry["copies"] = copies
@@ -48,19 +49,23 @@ def build_catalog(books):
 def available_titles(catalog):
     result = []
     for title, data in catalog.items():
-        if data["copies"] >= 0:
+        if data["copies"] > 0:
             result.append(title)
     return result
 
 
 def issue_book(catalog, title, member, issued):
     if title not in catalog:
-        print("Book not found")
-    elif catalog["title"]["copies"] == 0:
+        return "Book not found"
+    elif catalog[title]["copies"] == 0:
         return "Out of stock"
     else:
-        catalog["title"]["copies"] -= 1
-        issued["member"].append(title)
+        catalog[title]["copies"] -= 1
+
+        if member not in issued:
+            issued[member] = []
+
+        issued[member].append(title)
         return "Issued"
 
 
@@ -68,18 +73,21 @@ def late_fee(days_kept):
     allowed = 7
     if days_kept <= allowed:
         return 0
-    fee = days_kept * 5
-    return max(fee, 100)
+    fee = (days_kept - allowed) * 5
+    return min(fee, 100)
 
 
-def record(title, log=[]):
+def record(title, log=None):
+    if log is None:
+        log = []
+
     log.append(title)
     return log
 
 
 catalog = build_catalog(books)
 issued = {}
-print("Total books: " + str(len(books)))
+print("Total books: " , len(books))
 print("Available:", available_titles(catalog))
 print(issue_book(catalog, "Python Basics", "Md", issued))
 print(issue_book(catalog, "Data Science", "Md", issued))
@@ -94,18 +102,19 @@ for days in (5, 7, 12, 40):
 
 borrowed_titles = set()
 for titles in issued.values():
-    borrowed_titles.add(titles)
+    for title in titles:
+        borrowed_titles.add(title)
 print("Never issued:", sorted(set(catalog) - borrowed_titles))
 
-in_stock = list(catalog.keys())
-for t in in_stock:
-    if catalog[t]["copies"] == 0:
-        in_stock.remove(t)
+in_stock = [
+    t for t in catalog
+    if catalog[t]["copies"] > 0
+]
 print("In stock:", in_stock)
 
 total_age = 0
 for data in catalog.values():
     total_age += 2026 - data["year"]
-print("Average book age:", total_age // len(catalog))
+print("Average book age:", total_age / len(catalog))
 
 print(record("a"), record("b"))
