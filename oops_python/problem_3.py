@@ -14,12 +14,12 @@ class Rectangle:
 
 R1 = Rectangle(2 , 3)
 print("length of the rectangle : " , R1.length)
-print("length of the rectangle : " , R1.weidth)
+print("weidth of the rectangle : " , R1.weidth)
 print("area of the rectangle :  " , R1.display())
 
 print("--------------------------------------")
 
 R2 = Rectangle(5.4 , 8.7)
 print("length of the rectangle : " , R2.length)
-print("length of the rectangle : " , R2.weidth)
+print("weidth of the rectangle : " , R2.weidth)
 print("area of the rectangle :  " , R2.display())

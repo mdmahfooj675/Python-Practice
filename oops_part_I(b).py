@@ -111,4 +111,43 @@ d1 = Dog("Buddy" , 3)
 d1.bark()
 d1.birthday()
 
+# Create a class called Car.
+
+# It should have three attributes:
+# - brand
+# - color
+# - model
+# Create two objects with different values and print their information.
+
+class Car:
+    brand = "BMW"
+    colour = "blue"
+    model = "M4"
+
+
+car1 = Car()
+car2 = Car()
+
+print(f"car brand is : {car2.brand} car colour is :  {car2.colour} car model is :  {car2.model}")
+
+car2.brand = "mercedes"
+car2.colour = "white"
+car2.model = "z class"
+
+print(f"car brand is : {car1.brand} car colour is :  {car1.colour} car model is :  {car1.model}")
+print(f"car brand is : {car2.brand} car colour is :  {car2.colour} car model is :  {car2.model}")
+
+# ---------------------------------------------------------------------------
+
+# how to use del keyword in object oriented
+class Student:
+    def __init__(self , name):
+        self.name = name 
+
+s1 = Student("Md Mahfooj Alam")
+print("student name is : " , s1.name)
+
+#del s1.name
+print(s1.name)
+
 print("code ended....")
